@@ -1,3 +1,7 @@
+/**
+ * 请求类型枚举
+ * @type {Method}
+ */
 export type Method =
   | 'get'
   | 'GET'
@@ -14,9 +18,14 @@ export type Method =
   | 'patch'
   | 'PATCH'
 
+/**
+ * AxiosRequestConfig接口
+ * @interface {AxiosRequestConfig}
+ */
 export interface AxiosRequestConfig {
   url: string
   method?: Method
   data?: any
   params?: any
+  paramsSerializer?: Function
 }

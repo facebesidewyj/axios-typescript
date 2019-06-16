@@ -1,3 +1,8 @@
+/**
+ * xhr发送函数
+ * dev：wyj
+ * @type {Object}
+ */
 import { AxiosRequestConfig } from './../interfaces'
 
 function xhr(config: AxiosRequestConfig): void {
@@ -6,4 +11,4 @@ function xhr(config: AxiosRequestConfig): void {
   xhr.open(method.toUpperCase(), url, true)
   xhr.send(data)
 }
-export default xhr
+export { xhr }
