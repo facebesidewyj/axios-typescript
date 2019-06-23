@@ -1,5 +1,6 @@
 import { AxiosRequestConfig } from './interfaces'
 import { buildUrl } from './utils/urlUtils'
+import { transformData } from './utils/dataUtils'
 import { xhr } from './post/xhr'
 
 /**
@@ -25,6 +26,7 @@ class Axios {
    */
   private processConfig(config: AxiosRequestConfig): void {
     config.url = this.transformUrl(config)
+    config.data = this.transformRequest(config)
   }
 
   /**
@@ -35,6 +37,16 @@ class Axios {
   private transformUrl(config: AxiosRequestConfig): string {
     const { url, params, paramsSerializer } = config
     return buildUrl(url, params, paramsSerializer)
+  }
+
+  /**
+   * data转换器
+   * @param {AxiosRequestConfig} config 配置对象
+   * @returns {String} 转换后的Json字符串
+   */
+  private transformRequest(config: AxiosRequestConfig): string {
+    const { data } = config
+    return transformData(data)
   }
 }
 

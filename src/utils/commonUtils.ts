@@ -23,6 +23,15 @@ function isObject(val: any): val is Object {
 }
 
 /**
+ * 判断是否是普通对象
+ * @param {Object} val 判断对象
+ * @returns {Boolean} 是否是对象
+ */
+function isPlainObject(val: any): val is Object {
+  return toString.call(val) === '[object Object]'
+}
+
+/**
  * 判断是否是Function
  * @param {Object} val 判断对象
  * @returns {Boolean} 是否是Function
@@ -58,4 +67,4 @@ function isURLSearchParams(val: any): val is URLSearchParams {
   return !isUndefined(URLSearchParams) && val instanceof URLSearchParams
 }
 
-export { isDate, isObject, isUndefined, isNull, isURLSearchParams, isFunction }
+export { isDate, isObject, isPlainObject, isUndefined, isNull, isURLSearchParams, isFunction }

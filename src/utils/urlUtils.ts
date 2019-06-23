@@ -1,9 +1,15 @@
 /**
  * url处理工具函数
  * dev：wyj
- * @type {Object}
  */
-import { isDate, isObject, isUndefined, isNull, isURLSearchParams, isFunction } from './commonUtils'
+import {
+  isDate,
+  isPlainObject,
+  isUndefined,
+  isNull,
+  isURLSearchParams,
+  isFunction
+} from './commonUtils'
 
 /**
  * 转译函数
@@ -64,7 +70,7 @@ function handleCommonParams(params: any): string {
     for (let valItem of val) {
       if (isDate(valItem)) {
         valItem = valItem.toISOString()
-      } else if (isObject(valItem)) {
+      } else if (isPlainObject(valItem)) {
         valItem = JSON.stringify(valItem)
       }
 
