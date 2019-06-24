@@ -67,4 +67,25 @@ function isURLSearchParams(val: any): val is URLSearchParams {
   return !isUndefined(URLSearchParams) && val instanceof URLSearchParams
 }
 
-export { isDate, isObject, isPlainObject, isUndefined, isNull, isURLSearchParams, isFunction }
+/**
+ * 判断是否是ArrayBufferView对象
+ * @param {Object} val 判断对象
+ * @returns {Boolean} 是否是ArrayBufferView对象
+ */
+function isArrayBufferView(val: any): val is ArrayBufferView {
+  if (!isUndefined(ArrayBuffer) && ArrayBuffer.isView) {
+    return ArrayBuffer.isView(val)
+  }
+  return val && val.buffer && val.buffer instanceof ArrayBuffer
+}
+
+export {
+  isDate,
+  isObject,
+  isPlainObject,
+  isUndefined,
+  isNull,
+  isURLSearchParams,
+  isFunction,
+  isArrayBufferView
+}
