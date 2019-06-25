@@ -1,6 +1,7 @@
 import { AxiosRequestConfig } from './interfaces'
 import { buildUrl } from './utils/urlUtils'
 import { transformData } from './utils/dataUtils'
+import { transformHeaders } from './utils/headerUtils'
 import { xhr } from './post/xhr'
 
 /**
@@ -26,7 +27,8 @@ class Axios {
    */
   private processConfig(config: AxiosRequestConfig): void {
     config.url = this.transformUrl(config)
-    config.data = this.transformRequest(config)
+    config.headers = this.transformRequestHeaders(config)
+    config.data = this.transformRequestData(config)
   }
 
   /**
@@ -40,13 +42,23 @@ class Axios {
   }
 
   /**
-   * data转换器
+   * 请求参数data处理器
    * @param {AxiosRequestConfig} config 配置对象
    * @returns {String} 转换后的Json字符串
    */
-  private transformRequest(config: AxiosRequestConfig): string {
+  private transformRequestData(config: AxiosRequestConfig): any {
     const { data } = config
     return transformData(data)
+  }
+
+  /**
+   * 请求头header处理器
+   * @param {AxiosRequestConfig} config 配置对象
+   * @returns {Object} 处理后的header对象
+   */
+  private transformRequestHeaders(config: AxiosRequestConfig): any {
+    const { headers = {}, data } = config
+    return transformHeaders(headers, data)
   }
 }
 
