@@ -28,5 +28,23 @@ export interface AxiosRequestConfig {
   data?: any
   params?: any
   headers?: any
+  responseType?: XMLHttpRequestResponseType
   paramsSerializer?: Function
 }
+/**
+ * AxiosResponse接口
+ * @interface {AxiosResponse}
+ */
+export interface AxiosResponse {
+  data: any
+  status: number
+  statusText: string
+  headers: any
+  requestConfig: AxiosRequestConfig
+  request: any
+}
+/**
+ * AxiosPromise接口
+ * @interface {AxiosPromise}
+ */
+export interface AxiosPromise extends Promise<AxiosResponse> {}

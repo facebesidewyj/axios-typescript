@@ -36,8 +36,16 @@ function isPlainObject(val: any): val is Object {
  * @param {Object} val 判断对象
  * @returns {Boolean} 是否是Function
  */
-function isFunction(val: Function): val is Function {
+function isFunction(val: any): val is Function {
   return typeof val === 'function'
+}
+/**
+ * 判断是否是String
+ * @param {Object} val 判断对象
+ * @returns {Boolean} 是否是String
+ */
+function isString(val: any): val is string {
+  return typeof val === 'string'
 }
 
 /**
@@ -85,6 +93,7 @@ export {
   isPlainObject,
   isUndefined,
   isNull,
+  isString,
   isURLSearchParams,
   isFunction,
   isArrayBufferView

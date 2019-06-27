@@ -1,6 +1,6 @@
-import { AxiosRequestConfig } from './interfaces'
+import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './interfaces'
 import { buildUrl } from './utils/urlUtils'
-import { transformData } from './utils/dataUtils'
+import { transformData, parseResponseData } from './utils/dataUtils'
 import { transformHeaders } from './utils/headerUtils'
 import { xhr } from './post/xhr'
 
@@ -16,9 +16,11 @@ class Axios {
    * http请求函数
    * @param {AxiosRequestConfig} config 配置对象
    */
-  public http(config: AxiosRequestConfig): void {
+  public http(config: AxiosRequestConfig): AxiosPromise {
     this.processConfig(config)
-    xhr(config)
+    return xhr(config).then(response => {
+      return this.transformResponse(response)
+    })
   }
 
   /**
@@ -59,6 +61,16 @@ class Axios {
   private transformRequestHeaders(config: AxiosRequestConfig): any {
     const { headers = {}, data } = config
     return transformHeaders(headers, data)
+  }
+
+  /**
+   * 响应对象处理器
+   * @param {AxiosResponse} response 响应对象
+   * @returns {AxiosResponse} 处理后的响应对象
+   */
+  private transformResponse(response: AxiosResponse): AxiosResponse {
+    response.data = parseResponseData(response.data)
+    return response
   }
 }
 

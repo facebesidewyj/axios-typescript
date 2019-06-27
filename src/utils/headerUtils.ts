@@ -1,5 +1,5 @@
 /**
- * 请求头处理函数
+ * 请求头和响应头处理函数
  * dev：wyj
  */
 import config from './../config/config'
@@ -35,4 +35,29 @@ function transformHeaders(headers: any, data: any): any {
   }
   return headers
 }
-export { transformHeaders }
+/**
+ * 响应头解析函数
+ * @param {String} headers 响应头字符串
+ * @returns {Object} 转换后的响应头对象
+ */
+function parseResponseHeaders(headers: string): any {
+  let res = Object.create(null)
+  if (!headers) {
+    return res
+  }
+
+  for (const header of headers.split('/r/n')) {
+    let [key, val] = header.split(':')
+
+    if (key) {
+      key = key.trim().toLowerCase()
+    }
+
+    if (val) {
+      val = val.trim()
+    }
+    res[key] = val
+  }
+  return res
+}
+export { transformHeaders, parseResponseHeaders }

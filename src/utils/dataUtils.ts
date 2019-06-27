@@ -1,8 +1,8 @@
 /**
- * 请求参数工具函数
+ * 请求参数和响应数据工具函数
  * dev：wyj
  */
-import { isPlainObject, isURLSearchParams, isArrayBufferView } from './commonUtils'
+import { isPlainObject, isURLSearchParams, isArrayBufferView, isString } from './commonUtils'
 
 /**
  * data转换器
@@ -23,5 +23,18 @@ function transformData(data: any): any {
   }
   return data
 }
+/**
+ * 响应数据解析器
+ * @param {Object} data 响应数据
+ * @returns {Object} Json对象
+ */
+function parseResponseData(data: any): any {
+  if (isString(data)) {
+    try {
+      data = JSON.parse(data)
+    } catch (error) {}
+  }
+  return data
+}
 
-export { transformData }
+export { transformData, parseResponseData }
