@@ -1,4 +1,6 @@
-import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './interfaces'
+import { AxiosRequestConfig } from './interfaces/AxiosRequestConfig'
+import { AxiosResponse } from './interfaces/AxiosResponse'
+import { AxiosPromise } from './interfaces/AxiosPromise'
 import { buildUrl } from './utils/urlUtils'
 import { transformData, parseResponseData } from './utils/dataUtils'
 import { transformHeaders } from './utils/headerUtils'
