@@ -4,7 +4,7 @@ import { Method } from './../types/Method'
  * @interface {AxiosRequestConfig}
  */
 export interface AxiosRequestConfig {
-  url: string
+  url?: string
   method?: Method
   data?: any
   params?: any
