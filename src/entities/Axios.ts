@@ -2,14 +2,24 @@ import { AxiosPromise } from '../interfaces/AxiosPromise'
 import { AxiosRequestConfig } from '../interfaces/AxiosRequestConfig'
 import { http } from '../request/http'
 import { Method } from '../types/Method'
+import { isString } from '../utils/commonUtils'
 
 export default class Axios {
   /**
    * 通用请求方法
+   * @param {String} url 请求地址
    * @param {AxiosRequestConfig} requestConfig 请求配置对象
    * @returns {AxiosPromise} Promise对象
    */
-  public request(requestConfig: AxiosRequestConfig): AxiosPromise {
+  public request(url: string, requestConfig?: AxiosRequestConfig): AxiosPromise {
+    if (isString(url)) {
+      if (!requestConfig) {
+        requestConfig = {}
+      }
+      requestConfig.url = url
+    } else {
+      requestConfig = url
+    }
     return http(requestConfig)
   }
 

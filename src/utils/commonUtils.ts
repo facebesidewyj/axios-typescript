@@ -87,6 +87,19 @@ function isArrayBufferView(val: any): val is ArrayBufferView {
   return val && val.buffer && val.buffer instanceof ArrayBuffer
 }
 
+/**
+ * 构建混合对象
+ * @param {Object} to 目标对象
+ * @param {Object} from 原始对象
+ * @returns {Object} 混合对象
+ */
+function extend<T, U>(to: T, from: U): T & U {
+  for (const key in from) {
+    ;(to as T & U)[key] = from[key] as any
+  }
+  return to as T & U
+}
+
 export {
   isDate,
   isObject,
@@ -96,5 +109,6 @@ export {
   isString,
   isURLSearchParams,
   isFunction,
-  isArrayBufferView
+  isArrayBufferView,
+  extend
 }
