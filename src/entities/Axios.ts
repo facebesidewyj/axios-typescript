@@ -1,10 +1,24 @@
-import { AxiosPromise } from '../interfaces/AxiosPromise'
-import { AxiosRequestConfig } from '../interfaces/AxiosRequestConfig'
+import {
+  AxiosPromise,
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosInterceptorDispatch
+} from '../interfaces'
 import { http } from '../request/http'
 import { Method } from '../types/Method'
 import { isString } from '../utils/commonUtils'
+import { AxiosInterceptorManager } from './AxiosInterceptorManager'
 
-export default class Axios {
+export class Axios {
+  /**
+   * 拦截器调度执行对象，通过request.use或response.use来添加拦截器
+   * @type {AxiosInterceptorDispatch}
+   */
+  public interceptorDispatch: AxiosInterceptorDispatch = {
+    request: new AxiosInterceptorManager<AxiosRequestConfig>(),
+    response: new AxiosInterceptorManager<AxiosResponse>()
+  }
+
   /**
    * 通用请求方法
    * @param {String} url 请求地址
@@ -20,7 +34,30 @@ export default class Axios {
     } else {
       requestConfig = url
     }
-    return http(requestConfig)
+
+    const chain: Array<any> = [
+      {
+        resolved: http,
+        rejected: undefined
+      }
+    ]
+
+    this.interceptorDispatch.request.forEach(interceptor => {
+      chain.unshift(interceptor)
+    })
+
+    this.interceptorDispatch.response.forEach(interceptor => {
+      chain.push(interceptor)
+    })
+
+    let promise = Promise.resolve(requestConfig)
+
+    while (chain.length) {
+      const { resolved, rejected } = chain.shift()
+      promise = promise.then(resolved, rejected)
+    }
+
+    return promise as AxiosPromise
   }
 
   /**

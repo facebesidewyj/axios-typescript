@@ -1,6 +1,6 @@
 import { Method } from './../types/Method'
 /**
- * AxiosRequestConfig接口
+ * AxiosRequestConfig接口:定义接口请求对象
  * @interface {AxiosRequestConfig}
  */
 export interface AxiosRequestConfig {

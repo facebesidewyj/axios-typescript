@@ -1,6 +1,6 @@
-import Axios from './entities/Axios'
+import { Axios } from './entities'
 import { extend } from './utils/commonUtils'
-import { AxiosInstance } from './interfaces/AxiosInstance'
+import { AxiosInstance } from './interfaces'
 
 /**
  * 工厂函数

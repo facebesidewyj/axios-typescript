@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from './AxiosRequestConfig'
 /**
- * AxiosResponse接口
+ * AxiosResponse接口:定义接口返回对象
  * @interface {AxiosResponse}
  */
 export interface AxiosResponse<T = any> {

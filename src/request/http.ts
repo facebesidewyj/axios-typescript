@@ -1,6 +1,4 @@
-import { AxiosRequestConfig } from './../interfaces/AxiosRequestConfig'
-import { AxiosResponse } from './../interfaces/AxiosResponse'
-import { AxiosPromise } from './../interfaces/AxiosPromise'
+import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from './../interfaces'
 import { buildUrl } from './../utils/urlUtils'
 import { transformData, parseResponseData } from './../utils/dataUtils'
 import { transformHeaders } from './../utils/headerUtils'
@@ -34,7 +32,7 @@ function processConfig(config: AxiosRequestConfig): void {
  */
 function transformUrl(config: AxiosRequestConfig): string {
   const { url, params, paramsSerializer } = config
-  return buildUrl(url, params, paramsSerializer)
+  return buildUrl(url!, params, paramsSerializer)
 }
 
 /**

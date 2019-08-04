@@ -1,16 +1,14 @@
-/**
- * xhr发送函数
- * dev：wyj
- * @type {Object}
- */
-import { AxiosPromise } from '../interfaces/AxiosPromise'
-import { AxiosRequestConfig } from '../interfaces/AxiosRequestConfig'
-import { AxiosResponse } from '../interfaces/AxiosResponse'
+import { AxiosPromise, AxiosRequestConfig, AxiosResponse } from '../interfaces'
 import { isNull } from './../utils/commonUtils'
 import { parseResponseHeaders } from './../utils/headerUtils'
-import { createError } from './../entities/AxiosError'
+import { createError } from './../entities'
 import config from './../config/config'
 
+/**
+ * xhr发送函数
+ * @param {AxiosRequestConfig} requestConfig 请求参数
+ * @returns {AxiosPromise} Promise对象
+ */
 function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
     const { url, data = null, headers, method = 'get', responseType, timeout = 0 } = requestConfig
@@ -19,7 +17,7 @@ function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
     if (responseType) {
       xhr.responseType = responseType
     }
-    xhr.open(method.toUpperCase(), url, true)
+    xhr.open(method.toUpperCase(), url!, true)
 
     xhr.timeout = timeout
 

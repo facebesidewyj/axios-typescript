@@ -1,12 +1,10 @@
-import { AxiosRequestConfig } from '../interfaces/AxiosRequestConfig'
-import { AxiosResponse } from '../interfaces/AxiosResponse'
-import { AxiosErrorConfig } from '../interfaces/AxiosErrorConfig'
+import { AxiosRequestConfig, AxiosResponse, AxiosErrorConfig } from '../interfaces/'
 
 /**
  * AxiosError类：错误类，用来增强错误信息
  * @class {AxiosError}
  */
-class AxiosError extends Error {
+export class AxiosError extends Error {
   private requestConfig: AxiosRequestConfig
   private code?: string | null
   private request?: any
