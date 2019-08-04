@@ -1,11 +1,13 @@
 import { AxiosRequestConfig } from './AxiosRequestConfig'
 import { AxiosPromise } from './AxiosPromise'
+import { AxiosInterceptorDispatch } from './AxiosInterceptorDispatch'
 
 /**
  * Axios接口:用来定义Axios类需要实现的公共方法
  * @interface {Axios}
  */
 export interface Axios {
+  interceptorDispatch: AxiosInterceptorDispatch
   request<T = any>(config: AxiosRequestConfig): AxiosPromise<T>
   get<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
   delete<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
