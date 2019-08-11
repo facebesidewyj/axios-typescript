@@ -2,7 +2,7 @@ import { AxiosPromise, AxiosRequestConfig, AxiosResponse } from '../interfaces'
 import { isNull } from './../utils/commonUtils'
 import { parseResponseHeaders } from './../utils/headerUtils'
 import { createError } from './../entities'
-import config from './../config/config'
+import { CONTENT_TYPE } from './../config'
 
 /**
  * xhr发送函数
@@ -82,7 +82,7 @@ function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
     }
 
     for (const key of Object.keys(headers)) {
-      if (isNull(data) && key === config.CONTENT_TYPE) {
+      if (isNull(data) && key === CONTENT_TYPE) {
         delete headers[key]
       } else {
         xhr.setRequestHeader(key, headers[key])

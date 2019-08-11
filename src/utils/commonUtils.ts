@@ -100,6 +100,34 @@ function extend<T, U>(to: T, from: U): T & U {
   return to as T & U
 }
 
+/**
+ * 对象合并（深拷贝）
+ * @param {Array} objs 对象数组
+ * @returns {Object} 合并后的对象
+ */
+function deepMerge(...objs: any[]): any {
+  const res = Object.create(null)
+
+  objs.forEach(obj => {
+    if (obj) {
+      Object.keys(obj).forEach(key => {
+        const val = obj[key]
+
+        if (isPlainObject(val)) {
+          if (isPlainObject(res[key])) {
+            deepMerge(res[key], val)
+          } else {
+            deepMerge({}, val)
+          }
+        } else {
+          res[key] = val
+        }
+      })
+    }
+  })
+  return res
+}
+
 export {
   isDate,
   isObject,
@@ -110,5 +138,6 @@ export {
   isURLSearchParams,
   isFunction,
   isArrayBufferView,
-  extend
+  extend,
+  deepMerge
 }

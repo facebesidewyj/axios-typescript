@@ -2,8 +2,10 @@
  * 请求头和响应头处理函数
  * dev：wyj
  */
-import config from './../config/config'
-import { isPlainObject } from './commonUtils'
+import { CONTENT_TYPE } from './../config'
+import { isPlainObject, deepMerge } from './commonUtils'
+import { Method } from '../types/Method'
+import { METHODS } from './../config'
 
 /**
  * 规范请求头名称
@@ -21,19 +23,39 @@ function normalizeHeaderName(headers: any, normalizeName: string): void {
 }
 
 /**
+ * 扁平化Header对象(default配置中header的请求方式对应的是对象)
+ * @param {Object} headers 处理之前的请求头
+ * @param {Method} method 请求方法
+ * @returns {Object} 转换后的请求头对象
+ */
+function flattenHeaders(headers: any = {}, method: Method) {
+  headers = deepMerge(headers.common || {}, headers[method] || {})
+
+  METHODS.forEach(method => {
+    if (headers[method]) {
+      delete headers[method]
+    }
+  })
+
+  return headers
+}
+
+/**
  * 请求头转换函数
  * @param {Object} headers 请求头对象
  * @param {Object} data 请求参数对象
+ * @param {Method} method 请求方法
  * @returns {Object} 转换后的请求头对象
  */
-function transformHeaders(headers: any, data: any): any {
-  normalizeHeaderName(headers, config.CONTENT_TYPE)
+function transformHeaders(headers: any, data: any, method: Method): any {
+  normalizeHeaderName(headers, CONTENT_TYPE)
 
   // 默认给有参数对象的请求添加json请求头
-  if (isPlainObject(data) && !headers[config.CONTENT_TYPE]) {
-    headers[config.CONTENT_TYPE] = 'application/json;charset=UTF-8'
+  if (isPlainObject(data) && !headers[CONTENT_TYPE]) {
+    headers[CONTENT_TYPE] = 'application/json;charset=UTF-8'
   }
-  return headers
+
+  return flattenHeaders(headers, method)
 }
 /**
  * 响应头解析函数
@@ -60,4 +82,5 @@ function parseResponseHeaders(headers: string): any {
   }
   return res
 }
+
 export { transformHeaders, parseResponseHeaders }

@@ -12,4 +12,6 @@ export interface AxiosRequestConfig {
   timeout?: number
   responseType?: XMLHttpRequestResponseType
   paramsSerializer?: Function
+  // 指定索引签名
+  [propName: string]: any
 }

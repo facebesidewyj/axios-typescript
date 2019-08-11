@@ -51,8 +51,8 @@ function transformRequestData(config: AxiosRequestConfig): any {
  * @returns {Object} 处理后的header对象
  */
 function transformRequestHeaders(config: AxiosRequestConfig): any {
-  const { headers = {}, data } = config
-  return transformHeaders(headers, data)
+  const { headers = {}, data, method } = config
+  return transformHeaders(headers, data, method!)
 }
 
 /**

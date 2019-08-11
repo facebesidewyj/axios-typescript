@@ -7,7 +7,9 @@ import {
 import { http } from '../request/http'
 import { Method } from '../types/Method'
 import { isString } from '../utils/commonUtils'
+import { mergeConfig } from '../utils/configUtils'
 import { AxiosInterceptorManager } from './AxiosInterceptorManager'
+import { DEFAULTS } from './../config'
 
 export class Axios {
   /**
@@ -18,6 +20,11 @@ export class Axios {
     request: new AxiosInterceptorManager<AxiosRequestConfig>(),
     response: new AxiosInterceptorManager<AxiosResponse>()
   }
+  /**
+   * 默认配置对象
+   * @type {AxiosRequestConfig}
+   */
+  public defaults: AxiosRequestConfig = DEFAULTS
 
   /**
    * 通用请求方法
@@ -34,6 +41,8 @@ export class Axios {
     } else {
       requestConfig = url
     }
+
+    requestConfig = mergeConfig(this.defaults, requestConfig)
 
     const chain: Array<any> = [
       {
