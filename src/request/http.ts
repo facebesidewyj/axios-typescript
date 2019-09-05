@@ -1,8 +1,9 @@
 import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from './../interfaces'
 import { buildUrl } from './../utils/urlUtils'
-import { transformData, parseResponseData } from './../utils/dataUtils'
+import { transformData } from './../utils/dataUtils'
 import { transformHeaders } from './../utils/headerUtils'
 import { xhr } from './../post/xhr'
+import { transform } from './../utils/transform'
 
 /**
  * http请求函数
@@ -21,8 +22,7 @@ export function http(config: AxiosRequestConfig): AxiosPromise {
  */
 function processConfig(config: AxiosRequestConfig): void {
   config.url = transformUrl(config)
-  config.headers = transformRequestHeaders(config)
-  config.data = transformRequestData(config)
+  config.data = transform(config.data, config.headers, config.transformRequest)
 }
 
 /**
@@ -46,21 +46,15 @@ function transformRequestData(config: AxiosRequestConfig): any {
 }
 
 /**
- * 请求头header处理器
- * @param {AxiosRequestConfig} config 配置对象
- * @returns {Object} 处理后的header对象
- */
-function transformRequestHeaders(config: AxiosRequestConfig): any {
-  const { headers = {}, data, method } = config
-  return transformHeaders(headers, data, method!)
-}
-
-/**
  * 响应对象处理器
  * @param {AxiosResponse} response 响应对象
  * @returns {AxiosResponse} 处理后的响应对象
  */
 function transformResponse(response: AxiosResponse): AxiosResponse {
-  response.data = parseResponseData(response.data)
+  response.data = transform(
+    response.data,
+    response.headers,
+    response.requestConfig.transformResponse
+  )
   return response
 }

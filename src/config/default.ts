@@ -1,5 +1,8 @@
 import { AxiosRequestConfig } from './../interfaces'
 import { CONTENT_TYPE, METHODS } from './config'
+import { transformData, parseResponseData } from './../utils/dataUtils'
+import { transformHeaders } from './../utils/headerUtils'
+import { Method } from '../types/Method'
 
 /**
  * defaults默认config对象
@@ -12,7 +15,18 @@ const defaults: AxiosRequestConfig = {
     common: {
       Accept: 'application/json, text/plain, */*'
     }
-  }
+  },
+  transformRequest: [
+    function(data: any, headers: any, method: Method) {
+      transformHeaders(headers, data, method)
+      return transformData(data)
+    }
+  ],
+  transformResponse: [
+    function(data: any) {
+      return parseResponseData(data)
+    }
+  ]
 }
 
 // 遍历请求方法添加默认请求头
