@@ -2,10 +2,9 @@
  * 请求头和响应头处理函数
  * dev：wyj
  */
-import { CONTENT_TYPE } from './../config'
+import { CONTENT_TYPE, METHODS } from './../config'
 import { isPlainObject, deepMerge } from './commonUtils'
 import { Method } from '../types/Method'
-import { METHODS } from './../config'
 
 /**
  * 规范请求头名称

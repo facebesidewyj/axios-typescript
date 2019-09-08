@@ -7,6 +7,7 @@ import { AxiosInterceptorDispatch } from './AxiosInterceptorDispatch'
  * @interface {Axios}
  */
 export interface Axios {
+  defaults: AxiosRequestConfig
   interceptorDispatch: AxiosInterceptorDispatch
   request<T = any>(config: AxiosRequestConfig): AxiosPromise<T>
   get<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>

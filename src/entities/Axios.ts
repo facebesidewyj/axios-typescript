@@ -24,7 +24,11 @@ export class Axios {
    * 默认配置对象
    * @type {AxiosRequestConfig}
    */
-  public defaults: AxiosRequestConfig = DEFAULTS
+  public defaults: AxiosRequestConfig
+
+  constructor(initConfig?: AxiosRequestConfig) {
+    this.defaults = initConfig || DEFAULTS
+  }
 
   /**
    * 通用请求方法
