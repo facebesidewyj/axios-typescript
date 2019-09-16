@@ -8,6 +8,9 @@ import { AxiosInterceptorManager } from './AxiosInterceptorManager'
 import { AxiosPromise } from './AxiosPromise'
 import { AxiosRequestConfig } from './AxiosRequestConfig'
 import { AxiosResponse } from './AxiosResponse'
+import { CancelToken } from './CancelToken'
+import { CancelExecutor } from './CancelExecutor'
+import { Canceler } from './Canceler'
 
 export {
   Axios,
@@ -19,5 +22,8 @@ export {
   AxiosInterceptorManager,
   AxiosPromise,
   AxiosRequestConfig,
-  AxiosResponse
+  AxiosResponse,
+  CancelToken,
+  CancelExecutor,
+  Canceler
 }

@@ -1,5 +1,6 @@
 import { Method } from './../types/Method'
 import { AxiosTransformer } from './AxiosTransformer'
+import { CancelToken } from './CancelToken'
 
 /**
  * AxiosRequestConfig接口:定义接口请求对象
@@ -16,6 +17,7 @@ export interface AxiosRequestConfig {
   paramsSerializer?: Function
   transformRequest?: AxiosTransformer | AxiosTransformer[]
   transformResponse?: AxiosTransformer | AxiosTransformer[]
+  cancelToken?: CancelToken
   // 指定索引签名
   [propName: string]: any
 }

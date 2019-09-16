@@ -11,7 +11,16 @@ import { CONTENT_TYPE } from './../config'
  */
 function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
-    const { url, data = null, headers, method = 'get', responseType, timeout = 0 } = requestConfig
+    const {
+      url,
+      data = null,
+      headers,
+      method = 'get',
+      responseType,
+      timeout = 0,
+      cancelToken
+    } = requestConfig
+
     const xhr = new XMLHttpRequest()
 
     if (responseType) {
@@ -42,6 +51,13 @@ function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
         statusText: xhr.statusText,
         requestConfig,
         request: xhr
+      }
+
+      if (cancelToken) {
+        cancelToken.promise.then(reason => {
+          xhr.abort()
+          reject(reason)
+        })
       }
 
       if (xhr.status >= 200 && xhr.status < 300) {
