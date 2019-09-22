@@ -11,6 +11,8 @@ import { AxiosResponse } from './AxiosResponse'
 import { CancelToken } from './CancelToken'
 import { CancelExecutor } from './CancelExecutor'
 import { Canceler } from './Canceler'
+import { CancelTokenStatic } from './CancelTokenStatic'
+import { CancelTokenSource } from './CancelTokenSource'
 
 export {
   Axios,
@@ -25,5 +27,7 @@ export {
   AxiosResponse,
   CancelToken,
   CancelExecutor,
-  Canceler
+  Canceler,
+  CancelTokenStatic,
+  CancelTokenSource
 }

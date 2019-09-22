@@ -1,4 +1,4 @@
-import { CancelExecutor } from '../interfaces'
+import { CancelExecutor, CancelTokenSource, Canceler } from '../interfaces'
 
 interface ResolvePromise {
   (reason?: string): void
@@ -10,7 +10,7 @@ interface ResolvePromise {
  */
 export class CancelToken {
   public promise: Promise<string>
-  private reason?: string
+  public reason?: string
 
   constructor(executor: CancelExecutor) {
     let resolvePromise: ResolvePromise
@@ -25,5 +25,17 @@ export class CancelToken {
       this.reason = message
       resolvePromise(this.reason)
     })
+  }
+
+  static source(): CancelTokenSource {
+    let cancel!: Canceler
+    const token = new CancelToken(c => {
+      cancel = c
+    })
+
+    return {
+      token,
+      cancel
+    }
   }
 }
