@@ -54,10 +54,14 @@ function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
       }
 
       if (cancelToken) {
-        cancelToken.promise.then(reason => {
-          xhr.abort()
-          reject(reason)
-        })
+        cancelToken.promise
+          .then(reason => {
+            xhr.abort()
+            reject(reason)
+          })
+          .catch(() => {
+            console.log('cancelToken error')
+          })
       }
 
       if (xhr.status >= 200 && xhr.status < 300) {

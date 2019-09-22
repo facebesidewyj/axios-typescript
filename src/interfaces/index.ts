@@ -9,10 +9,12 @@ import { AxiosPromise } from './AxiosPromise'
 import { AxiosRequestConfig } from './AxiosRequestConfig'
 import { AxiosResponse } from './AxiosResponse'
 import { CancelToken } from './CancelToken'
+import { CancelTokenStatic } from './CancelTokenStatic'
 import { CancelExecutor } from './CancelExecutor'
 import { Canceler } from './Canceler'
-import { CancelTokenStatic } from './CancelTokenStatic'
 import { CancelTokenSource } from './CancelTokenSource'
+import { Cancel } from './Cancel'
+import { CancelStatic } from './CancelStatic'
 
 export {
   Axios,
@@ -29,5 +31,7 @@ export {
   CancelExecutor,
   Canceler,
   CancelTokenStatic,
-  CancelTokenSource
+  CancelTokenSource,
+  Cancel,
+  CancelStatic
 }

@@ -10,10 +10,21 @@ import { transform } from './../utils/transform'
  * @param {AxiosRequestConfig} config 配置对象
  */
 export function http(config: AxiosRequestConfig): AxiosPromise {
+  throwIfCancellationRequested(config)
   processConfig(config)
   return xhr(config).then(response => {
     return transformResponse(response)
   })
+}
+
+/**
+ * cancelToken被使用过，直接抛出异常
+ * @param {AxiosRequestConfig} config 配置对象
+ */
+function throwIfCancellationRequested(config: AxiosRequestConfig): void {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested()
+  }
 }
 
 /**

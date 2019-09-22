@@ -1,8 +1,9 @@
-import { Axios } from './entities'
+import { Axios, CancelToken, Cancel } from './entities'
 import { extend } from './utils/commonUtils'
 import { AxiosStatic, AxiosRequestConfig } from './interfaces'
 import { mergeConfig } from './utils/configUtils'
 import { DEFAULTS } from './config'
+import { isCancel } from './entities/Cancel'
 
 /**
  * 工厂函数
@@ -22,5 +23,9 @@ const axios = createInstance()
 axios.create = function(config) {
   return createInstance(mergeConfig(DEFAULTS, config))
 }
+
+axios.CancelToken = CancelToken
+axios.Cancel = Cancel
+axios.isCancel = isCancel
 
 export default axios

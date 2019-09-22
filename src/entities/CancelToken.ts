@@ -1,7 +1,8 @@
 import { CancelExecutor, CancelTokenSource, Canceler } from '../interfaces'
+import { Cancel } from './Cancel'
 
 interface ResolvePromise {
-  (reason?: string): void
+  (reason?: Cancel): void
 }
 
 /**
@@ -9,12 +10,12 @@ interface ResolvePromise {
  * @class {CancelToken}
  */
 export class CancelToken {
-  public promise: Promise<string>
-  public reason?: string
+  public promise: Promise<Cancel>
+  public reason?: Cancel
 
   constructor(executor: CancelExecutor) {
     let resolvePromise: ResolvePromise
-    this.promise = new Promise<string>(resolve => {
+    this.promise = new Promise<Cancel>(resolve => {
       resolvePromise = resolve
     })
 
@@ -22,7 +23,7 @@ export class CancelToken {
       if (this.reason) {
         return false
       }
-      this.reason = message
+      this.reason = new Cancel(message)
       resolvePromise(this.reason)
     })
   }
@@ -36,6 +37,14 @@ export class CancelToken {
     return {
       token,
       cancel
+    }
+  }
+  /**
+   * 判断cancelToken被使用过，直接抛出异常
+   */
+  throwIfRequested(): void {
+    if (this.reason) {
+      throw this.reason
     }
   }
 }
