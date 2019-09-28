@@ -18,13 +18,19 @@ function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
       method = 'get',
       responseType,
       timeout = 0,
-      cancelToken
+      cancelToken,
+      withCredentials
     } = requestConfig
 
     const xhr = new XMLHttpRequest()
 
     if (responseType) {
       xhr.responseType = responseType
+    }
+
+    // 设置跨域cookie认证
+    if (withCredentials) {
+      xhr.withCredentials = withCredentials
     }
     xhr.open(method.toUpperCase(), url!, true)
 
