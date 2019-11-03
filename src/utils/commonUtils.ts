@@ -88,6 +88,15 @@ function isArrayBufferView(val: any): val is ArrayBufferView {
 }
 
 /**
+ * 判断是否是FormData
+ * @param {Object} val 判断对象
+ * @returns {Boolean} 是否是FormData类型
+ */
+function isFormData(val: any): val is FormData {
+  return !isUndefined(val) && val instanceof FormData
+}
+
+/**
  * 构建混合对象
  * @param {Object} to 目标对象
  * @param {Object} from 原始对象
@@ -137,6 +146,7 @@ export {
   isString,
   isURLSearchParams,
   isFunction,
+  isFormData,
   isArrayBufferView,
   extend,
   deepMerge

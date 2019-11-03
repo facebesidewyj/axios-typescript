@@ -1,5 +1,5 @@
 import { AxiosPromise, AxiosRequestConfig, AxiosResponse } from '../interfaces'
-import { isNull } from './../utils/commonUtils'
+import { isNull, isFormData } from './../utils/commonUtils'
 import { parseResponseHeaders } from './../utils/headerUtils'
 import { createError } from './../entities'
 import { CONTENT_TYPE } from './../config'
@@ -23,7 +23,9 @@ function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
       cancelToken,
       xsrfCookieName,
       xsrfHeaderName,
-      withCredentials
+      withCredentials,
+      onDownloadProgress,
+      onUploadProgress
     } = requestConfig
 
     const xhr = new XMLHttpRequest()
@@ -111,6 +113,14 @@ function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
       )
     }
 
+    if (onDownloadProgress) {
+      xhr.onprogress = onDownloadProgress
+    }
+
+    if (onUploadProgress) {
+      xhr.upload.onprogress = onUploadProgress
+    }
+
     // 同域或者withCredentials条件下，在header中携带防xsrf攻击的token
     if ((withCredentials || isURLSameOrigin(url!)) && xsrfCookieName) {
       const value = readCookie(xsrfCookieName)
@@ -119,8 +129,12 @@ function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
       }
     }
 
+    if (isFormData(data)) {
+      delete headers[CONTENT_TYPE]
+    }
+
     Object.keys(headers).forEach(key => {
-      if (isNull(data) && key.toLowerCase() === CONTENT_TYPE) {
+      if (isNull(data) && key === CONTENT_TYPE) {
         delete headers[key]
       } else {
         xhr.setRequestHeader(key, headers[key])
