@@ -11,6 +11,8 @@ import { Method } from '../types/Method'
 const defaults: AxiosRequestConfig = {
   timeout: 0,
   method: 'get',
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
   headers: {
     common: {
       Accept: 'application/json, text/plain, */*'

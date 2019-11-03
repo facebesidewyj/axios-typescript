@@ -3,6 +3,8 @@ import { isNull } from './../utils/commonUtils'
 import { parseResponseHeaders } from './../utils/headerUtils'
 import { createError } from './../entities'
 import { CONTENT_TYPE } from './../config'
+import { isURLSameOrigin } from '../utils/urlUtils'
+import { readCookie } from '../utils/cookieUtils'
 
 /**
  * xhr发送函数
@@ -19,6 +21,8 @@ function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
       responseType,
       timeout = 0,
       cancelToken,
+      xsrfCookieName,
+      xsrfHeaderName,
       withCredentials
     } = requestConfig
 
@@ -107,13 +111,21 @@ function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
       )
     }
 
-    for (const key of Object.keys(headers)) {
-      if (isNull(data) && key === CONTENT_TYPE) {
+    // 同域或者withCredentials条件下，在header中携带防xsrf攻击的token
+    if ((withCredentials || isURLSameOrigin(url!)) && xsrfCookieName) {
+      const value = readCookie(xsrfCookieName)
+      if (value && xsrfHeaderName) {
+        headers[xsrfHeaderName] = value
+      }
+    }
+
+    Object.keys(headers).forEach(key => {
+      if (isNull(data) && key.toLowerCase() === CONTENT_TYPE) {
         delete headers[key]
       } else {
         xhr.setRequestHeader(key, headers[key])
       }
-    }
+    })
 
     xhr.send(data)
   })

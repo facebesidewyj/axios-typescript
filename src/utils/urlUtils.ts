@@ -109,4 +109,30 @@ function buildUrl(url: string, params?: any, paramsSerializer?: Function): strin
   return url
 }
 
-export { buildUrl }
+/**
+ * 根据协议和host判断是否是同域请求
+ * @param {String} requestURL 请求地址
+ * @returns {Boolean} 是否是同域请求
+ */
+function isURLSameOrigin(requestURL: string): boolean {
+  const currentOrigin = resolveURL(window.location.href)
+  const requestOrigin = resolveURL(requestURL)
+
+  return (
+    currentOrigin.protocol === requestOrigin.protocol && currentOrigin.host === requestOrigin.host
+  )
+}
+
+/**
+ * 借助<a>标签解析协议和host
+ * @param {String} url 地址
+ * @returns {Object} 协议和host对象
+ */
+function resolveURL(url: string) {
+  let node = document.createElement('a')
+  node.setAttribute('href', url)
+  const { protocol, host } = node
+  return { protocol, host }
+}
+
+export { buildUrl, isURLSameOrigin }
