@@ -25,6 +25,7 @@ export interface AxiosRequestConfig {
   onDownloadProgress?: (e: ProgressEvent) => void
   onUploadProgress?: (e: ProgressEvent) => void
   auth?: AxiosAuthorization
+  validateStatus?: (status: number) => boolean
   // 指定索引签名
   [propName: string]: any
 }

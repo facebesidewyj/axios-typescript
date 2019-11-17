@@ -26,7 +26,8 @@ function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
       withCredentials,
       onDownloadProgress,
       onUploadProgress,
-      auth
+      auth,
+      validateStatus
     } = requestConfig
 
     const xhr = new XMLHttpRequest()
@@ -77,7 +78,7 @@ function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
           })
       }
 
-      if (xhr.status >= 200 && xhr.status < 300) {
+      if (!validateStatus || validateStatus(xhr.status)) {
         resolve(response)
       } else {
         reject(

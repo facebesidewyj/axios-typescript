@@ -28,7 +28,10 @@ const defaults: AxiosRequestConfig = {
     function(data: any) {
       return parseResponseData(data)
     }
-  ]
+  ],
+  validateStatus(status: number): boolean {
+    return status >= 200 && status < 300
+  }
 }
 
 // 遍历请求方法添加默认请求头
