@@ -15,6 +15,7 @@ import { Canceler } from './Canceler'
 import { CancelTokenSource } from './CancelTokenSource'
 import { Cancel } from './Cancel'
 import { CancelStatic } from './CancelStatic'
+import { AxiosAuthorization } from './AxiosAuthorization'
 
 export {
   Axios,
@@ -27,6 +28,7 @@ export {
   AxiosPromise,
   AxiosRequestConfig,
   AxiosResponse,
+  AxiosAuthorization,
   CancelToken,
   CancelExecutor,
   Canceler,

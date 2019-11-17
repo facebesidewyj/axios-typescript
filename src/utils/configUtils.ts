@@ -47,7 +47,8 @@ const strategyMap: any = {
   url: dataMerge,
   params: dataMerge,
   data: dataMerge,
-  headers: objMerge
+  headers: objMerge,
+  auth: objMerge
 }
 
 /**

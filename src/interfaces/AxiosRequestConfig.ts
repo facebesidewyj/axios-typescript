@@ -1,6 +1,7 @@
 import { Method } from './../types/Method'
 import { AxiosTransformer } from './AxiosTransformer'
 import { CancelToken } from './CancelToken'
+import { AxiosAuthorization } from './AxiosAuthorization'
 
 /**
  * AxiosRequestConfig接口:定义接口请求对象
@@ -23,6 +24,7 @@ export interface AxiosRequestConfig {
   xsrfHeaderName?: string
   onDownloadProgress?: (e: ProgressEvent) => void
   onUploadProgress?: (e: ProgressEvent) => void
+  auth?: AxiosAuthorization
   // 指定索引签名
   [propName: string]: any
 }

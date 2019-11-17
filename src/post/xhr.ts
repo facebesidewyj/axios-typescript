@@ -25,7 +25,8 @@ function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
       xsrfHeaderName,
       withCredentials,
       onDownloadProgress,
-      onUploadProgress
+      onUploadProgress,
+      auth
     } = requestConfig
 
     const xhr = new XMLHttpRequest()
@@ -127,6 +128,10 @@ function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
       if (value && xsrfHeaderName) {
         headers[xsrfHeaderName] = value
       }
+    }
+
+    if (auth) {
+      headers['Authorization'] = `Basic ${btoa(`${auth.username}:${auth.password}`)}`
     }
 
     if (isFormData(data)) {
