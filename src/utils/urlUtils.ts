@@ -87,7 +87,7 @@ function handleCommonParams(params: any): string {
  * @param {Function} paramsSerializer 自定义序列化url参数方法
  * @returns {String} 构建url
  */
-function buildUrl(url: string, params?: any, paramsSerializer?: Function): string {
+function buildUrl(url: string, params?: any, paramsSerializer?: (params: any) => string): string {
   if (!params) {
     return url
   }

@@ -15,7 +15,7 @@ export interface AxiosRequestConfig {
   headers?: any
   timeout?: number
   responseType?: XMLHttpRequestResponseType
-  paramsSerializer?: Function
+  paramsSerializer?: (params: any) => string
   transformRequest?: AxiosTransformer | AxiosTransformer[]
   transformResponse?: AxiosTransformer | AxiosTransformer[]
   cancelToken?: CancelToken
