@@ -135,4 +135,23 @@ function resolveURL(url: string) {
   return { protocol, host }
 }
 
-export { buildUrl, isURLSameOrigin }
+/**
+ * 正则判断是否是绝对地址
+ * @param {String} url 地址
+ * @returns {Boolean} 是否是绝对地址
+ */
+function isAbsoluteURL(url: string): boolean {
+  return /(^[a-z][a-z\d\+\-\.]*:)?\/\//i.test(url)
+}
+
+/**
+ * url拼接方法
+ * @param {String} baseURL 基础地址
+ * @param {String} url 地址
+ * @returns {String} url拼接之后的地址
+ */
+function combineURL(baseURL: string, url?: string): string {
+  return url ? baseURL + url : baseURL
+}
+
+export { buildUrl, isURLSameOrigin, isAbsoluteURL, combineURL }

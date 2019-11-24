@@ -9,6 +9,7 @@ import { AxiosAuthorization } from './AxiosAuthorization'
  */
 export interface AxiosRequestConfig {
   url?: string
+  baseURL?: string
   method?: Method
   data?: any
   params?: any

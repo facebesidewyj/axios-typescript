@@ -1,5 +1,5 @@
 import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from './../interfaces'
-import { buildUrl } from './../utils/urlUtils'
+import { buildUrl, isAbsoluteURL, combineURL } from './../utils/urlUtils'
 import { transformData } from './../utils/dataUtils'
 import { transformHeaders } from './../utils/headerUtils'
 import { xhr } from './../post/xhr'
@@ -42,7 +42,11 @@ function processConfig(config: AxiosRequestConfig): void {
  * @returns {String} 转换后的url
  */
 function transformUrl(config: AxiosRequestConfig): string {
-  const { url, params, paramsSerializer } = config
+  let { url, baseURL, params, paramsSerializer } = config
+  if (baseURL && !isAbsoluteURL(url!)) {
+    url = combineURL(baseURL, url)
+  }
+
   return buildUrl(url!, params, paramsSerializer)
 }
 
