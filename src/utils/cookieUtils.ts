@@ -9,7 +9,7 @@
  * @returns {String} value
  */
 function readCookie(cookieName: string): string | null {
-  const reg = new RegExp('(^|;\\s*)(' + name + ')=([^;]*)')
+  const reg = new RegExp('(^|;\\s*)(' + cookieName + ')=([^;]*)')
   const match = document.cookie.match(reg)
   return match && match[3]
 }
