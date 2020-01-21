@@ -124,9 +124,9 @@ function deepMerge(...objs: any[]): any {
 
         if (isPlainObject(val)) {
           if (isPlainObject(res[key])) {
-            deepMerge(res[key], val)
+            res[key] = deepMerge(res[key], val)
           } else {
-            deepMerge({}, val)
+            res[key] = deepMerge(val)
           }
         } else {
           res[key] = val

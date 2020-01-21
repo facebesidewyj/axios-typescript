@@ -81,6 +81,25 @@ describe('utils:common', () => {
     })
   })
 
+  describe('extend', () => {
+    test('should be mutable', () => {
+      const a = Object.create(null)
+      const b = { foo: 123 }
+      extend(a, b)
+
+      expect(a.foo).toBe(123)
+    })
+
+    test('should extend properties', () => {
+      const a = { foo: 123 }
+      const b = { foo: 345, bar: 789 }
+      const c = extend(a, b)
+
+      expect(c.foo).toBe(345)
+      expect(c.bar).toBe(789)
+    })
+  })
+
   describe('deepMerge', () => {
     test('should be immutable', () => {
       const a = Object.create(null)
@@ -95,17 +114,48 @@ describe('utils:common', () => {
       expect(c.foo).toBeUndefined()
     })
 
+    test('should deepMerge properties', () => {
+      const a = { foo: 123 }
+      const b = { bar: 345 }
+      const c = { foo: 987 }
+      const d = deepMerge(a, b, c)
+
+      expect(d.foo).toBe(987)
+      expect(d.bar).toBe(345)
+    })
+
     test('should deepMerge recursively', () => {
-      // TODO 有bug
       const a: any = { foo: { bar: 123 } }
       const b: any = { foo: { baz: 345 }, bar: { qux: 567 } }
 
-      const d = deepMerge(a, b)
+      const c = deepMerge(a, b)
 
-      expect(d).toEqual({
+      expect(c).toEqual({
         bar: { qux: 567 },
         foo: { bar: 123, baz: 345 }
       })
+    })
+
+    test('should remove all references from nested objects', () => {
+      const a: any = { foo: { bar: 123 } }
+      const b: any = {}
+
+      const c = deepMerge(a, b)
+
+      expect(c).toEqual({
+        foo: { bar: 123 }
+      })
+      expect(c.foo).not.toBe(a.foo)
+    })
+
+    test('should handle null and undefined arguments', () => {
+      expect(deepMerge(undefined, undefined)).toEqual({})
+      expect(deepMerge(undefined, { foo: 123 })).toEqual({ foo: 123 })
+      expect(deepMerge({ foo: 123 }, undefined)).toEqual({ foo: 123 })
+
+      expect(deepMerge(null, null)).toEqual({})
+      expect(deepMerge(null, { foo: 123 })).toEqual({ foo: 123 })
+      expect(deepMerge({ foo: 123 }, null)).toEqual({ foo: 123 })
     })
   })
 })
