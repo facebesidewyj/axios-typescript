@@ -26,8 +26,6 @@ describe('utils:data', () => {
 
     test('should do nothing if data is a string but not a JSON string', () => {
       const a = 'test'
-      console.log(parseResponseData(a), 'parseResponseData(a)')
-
       expect(parseResponseData(a)).toBe('test')
     })
 

@@ -5,11 +5,11 @@ import { AxiosRequestConfig, AxiosResponse, AxiosErrorConfig } from '../interfac
  * @class {AxiosError}
  */
 export class AxiosError extends Error {
-  private requestConfig: AxiosRequestConfig
-  private code?: string | null
-  private request?: any
-  private response?: AxiosResponse | null
-  private isAxiosError: boolean = true
+  requestConfig: AxiosRequestConfig
+  code?: string | null
+  request?: any
+  response?: AxiosResponse | null
+  isAxiosError: boolean = true
 
   constructor({ message, requestConfig, code, request, response }: AxiosErrorConfig) {
     super(message)
