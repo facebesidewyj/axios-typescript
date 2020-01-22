@@ -12,6 +12,10 @@ import { Method } from '../types/Method'
  * @param {String} normalizeName 规范化名称
  */
 function normalizeHeaderName(headers: any, normalizeName: string): void {
+  if (!headers) {
+    return
+  }
+
   for (const key of Object.keys(headers)) {
     // 名称含义相同，但是大小写不同（header大小写不敏感）
     if (key !== normalizeName && key.toLowerCase() === normalizeName.toLowerCase()) {
@@ -27,10 +31,15 @@ function normalizeHeaderName(headers: any, normalizeName: string): void {
  * @param {Method} method 请求方法
  * @returns {Object} 转换后的请求头对象
  */
-function flattenHeaders(headers: any = {}, method: Method) {
-  headers = deepMerge(headers.common || {}, headers[method] || {})
+function flattenHeaders(headers: any, method: Method) {
+  if (!headers) {
+    return headers
+  }
 
-  METHODS.forEach(method => {
+  headers = deepMerge(headers.common || {}, headers[method] || {}, headers)
+
+  const methodsToDelete = METHODS.concat('common')
+  methodsToDelete.forEach(method => {
     if (headers[method]) {
       delete headers[method]
     }
@@ -43,15 +52,15 @@ function flattenHeaders(headers: any = {}, method: Method) {
  * 请求头转换函数
  * @param {Object} headers 请求头对象
  * @param {Object} data 请求参数对象
- * @param {Method} method 请求方法
+ * @param {Method} method 请求方法(可选参数flattenHeaders方法里面有判空)
  * @returns {Object} 转换后的请求头对象
  */
 function transformHeaders(headers: any, data: any, method: Method): any {
   normalizeHeaderName(headers, CONTENT_TYPE)
 
   // 默认给有参数对象的请求添加json请求头
-  if (isPlainObject(data) && !headers[CONTENT_TYPE]) {
-    headers[CONTENT_TYPE] = 'application/json;charset=UTF-8'
+  if (isPlainObject(data) && headers && !headers[CONTENT_TYPE]) {
+    headers[CONTENT_TYPE] = 'application/json;charset=utf-8'
   }
 
   return flattenHeaders(headers, method)
@@ -67,17 +76,18 @@ function parseResponseHeaders(headers: string): any {
     return res
   }
 
-  for (const header of headers.split('/r/n')) {
-    let [key, val] = header.split(':')
+  for (const header of headers.split('\r\n')) {
+    let [key, ...vals] = header.split(':')
 
     if (key) {
       key = key.trim().toLowerCase()
-    }
 
-    if (val) {
-      val = val.trim()
+      let val = vals.join(':')
+      if (val) {
+        val = val.trim()
+      }
+      res[key] = val
     }
-    res[key] = val
   }
   return res
 }

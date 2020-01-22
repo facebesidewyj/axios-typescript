@@ -1,7 +1,6 @@
 import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from './../interfaces'
 import { buildUrl, isAbsoluteURL, combineURL } from './../utils/urlUtils'
 import { transformData } from './../utils/dataUtils'
-import { transformHeaders } from './../utils/headerUtils'
 import { xhr } from './../post/xhr'
 import { transform } from './../utils/transform'
 
@@ -48,16 +47,6 @@ function transformUrl(config: AxiosRequestConfig): string {
   }
 
   return buildUrl(url!, params, paramsSerializer)
-}
-
-/**
- * 请求参数data处理器
- * @param {AxiosRequestConfig} config 配置对象
- * @returns {String} 转换后的Json字符串
- */
-function transformRequestData(config: AxiosRequestConfig): any {
-  const { data } = config
-  return transformData(data)
 }
 
 /**
