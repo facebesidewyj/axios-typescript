@@ -1,5 +1,5 @@
 import { AxiosRequestConfig, AxiosResponse, AxiosPromise } from './../interfaces'
-import { buildUrl, isAbsoluteURL, combineURL } from './../utils/urlUtils'
+import { buildURL, isAbsoluteURL, combineURL } from './../utils/urlUtils'
 import { transformData } from './../utils/dataUtils'
 import { xhr } from './../post/xhr'
 import { transform } from './../utils/transform'
@@ -46,7 +46,7 @@ function transformUrl(config: AxiosRequestConfig): string {
     url = combineURL(baseURL, url)
   }
 
-  return buildUrl(url!, params, paramsSerializer)
+  return buildURL(url!, params, paramsSerializer)
 }
 
 /**

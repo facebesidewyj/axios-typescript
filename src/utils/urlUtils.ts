@@ -22,7 +22,7 @@ function encode(val: string): string {
     .replace(/%3A/gi, ':')
     .replace(/%24/g, '$')
     .replace(/%2C/gi, ',')
-    .replace(/%20/g, '*')
+    .replace(/%20/g, '+')
     .replace(/%5B/gi, '[')
     .replace(/%5D/gi, ']')
 }
@@ -87,7 +87,7 @@ function handleCommonParams(params: any): string {
  * @param {Function} paramsSerializer 自定义序列化url参数方法
  * @returns {String} 构建url
  */
-function buildUrl(url: string, params?: any, paramsSerializer?: (params: any) => string): string {
+function buildURL(url: string, params?: any, paramsSerializer?: (params: any) => string): string {
   if (!params) {
     return url
   }
@@ -103,7 +103,7 @@ function buildUrl(url: string, params?: any, paramsSerializer?: (params: any) =>
 
   if (serializedParams) {
     url = removeHash(url)
-    url += (url.indexOf('?') !== -1 ? '?' : '&') + serializedParams
+    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams
   }
 
   return url
@@ -141,7 +141,7 @@ function resolveURL(url: string) {
  * @returns {Boolean} 是否是绝对地址
  */
 function isAbsoluteURL(url: string): boolean {
-  return /(^[a-z][a-z\d\+\-\.]*:)?\/\//i.test(url)
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url)
 }
 
 /**
@@ -154,4 +154,4 @@ function combineURL(baseURL: string, url?: string): string {
   return url ? baseURL + url : baseURL
 }
 
-export { buildUrl, isURLSameOrigin, isAbsoluteURL, combineURL }
+export { buildURL, isURLSameOrigin, isAbsoluteURL, combineURL }
