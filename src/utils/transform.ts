@@ -18,7 +18,7 @@ export function transform(
   }
 
   fns.forEach(fn => {
-    data = fn(data)
+    data = fn(data, headers)
   })
 
   return data

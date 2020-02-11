@@ -11,9 +11,17 @@ import { transform } from './../utils/transform'
 export function http(config: AxiosRequestConfig): AxiosPromise {
   throwIfCancellationRequested(config)
   processConfig(config)
-  return xhr(config).then(response => {
-    return transformResponse(response)
-  })
+  return xhr(config).then(
+    response => {
+      return transformResponse(response)
+    },
+    e => {
+      if (e && e.response) {
+        e.response = transformResponse(e.response)
+      }
+      return Promise.reject(e)
+    }
+  )
 }
 
 /**

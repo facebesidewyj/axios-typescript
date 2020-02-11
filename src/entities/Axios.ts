@@ -36,7 +36,7 @@ export class Axios {
    * @param {AxiosRequestConfig} requestConfig 请求配置对象
    * @returns {AxiosPromise} Promise对象
    */
-  public request(url: string, requestConfig?: AxiosRequestConfig): AxiosPromise {
+  public request(url: any, requestConfig?: any): AxiosPromise {
     if (isString(url)) {
       if (!requestConfig) {
         requestConfig = {}
@@ -47,6 +47,7 @@ export class Axios {
     }
 
     requestConfig = mergeConfig(this.defaults, requestConfig)
+    requestConfig.method = requestConfig.method.toLowerCase()
 
     const chain: Array<any> = [
       {
@@ -164,6 +165,6 @@ export class Axios {
     if (data) {
       config.data = data
     }
-    return http(config)
+    return this.request(config)
   }
 }
