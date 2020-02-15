@@ -3,6 +3,7 @@ import { buildURL, isAbsoluteURL, combineURL } from './../utils/urlUtils'
 import { transformData } from './../utils/dataUtils'
 import { xhr } from './../post/xhr'
 import { transform } from './../utils/transform'
+import { transformHeaders } from '../utils/headerUtils'
 
 /**
  * http请求函数
@@ -40,6 +41,7 @@ function throwIfCancellationRequested(config: AxiosRequestConfig): void {
  */
 function processConfig(config: AxiosRequestConfig): void {
   config.url = transformUrl(config)
+  config.headers = transformHeaders(config.headers, config.data, config.method!)
   config.data = transform(config.data, config.headers, config.transformRequest)
 }
 

@@ -20,7 +20,6 @@ const defaults: AxiosRequestConfig = {
   },
   transformRequest: [
     function(data: any, headers: any, method: Method) {
-      transformHeaders(headers, data, method)
       return transformData(data)
     }
   ],

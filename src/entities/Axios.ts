@@ -161,10 +161,7 @@ export class Axios {
     requestConfig?: AxiosRequestConfig,
     data?: any
   ): AxiosPromise {
-    let config = Object.assign(requestConfig || {}, { url, method })
-    if (data) {
-      config.data = data
-    }
+    let config = Object.assign(requestConfig || {}, { url, method, data })
     return this.request(config)
   }
 }
