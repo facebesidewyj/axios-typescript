@@ -6,5 +6,5 @@ import { AxiosPromise } from './AxiosPromise'
  */
 export interface AxiosInterceptor<T> {
   resolved(val: T): T | AxiosPromise<T>
-  rejected(error: any): any
+  rejected?(error: any): any
 }
