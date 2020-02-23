@@ -16,7 +16,7 @@ function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
     const {
       url,
       data = null,
-      headers,
+      headers = {},
       method = 'get',
       responseType,
       timeout = 0,
