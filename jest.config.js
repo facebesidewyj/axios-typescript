@@ -14,6 +14,6 @@ module.exports = {
       statements: 95
     }
   },
-  collectCoverageFrom: ['src/*.{js,ts}', 'src/**/*.{js,ts}'],
+  collectCoverageFrom: ['src/**/*.{js,ts}'],
   setupFilesAfterEnv: ['<rootDir>/test/boot.ts']
 }

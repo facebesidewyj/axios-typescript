@@ -33,13 +33,14 @@ function dataMerge(val1: any, val2: any) {
 function objMerge(val1: any, val2: any) {
   if (isPlainObject(val2)) {
     return deepMerge(val1, val2)
-  } else if (!isUndefined(val2)) {
-    return val2
-  } else if (isPlainObject(val1)) {
-    return deepMerge(val1)
-  } else if (!isUndefined(val1)) {
-    return val1
   }
+  if (!isUndefined(val2)) {
+    return val2
+  }
+  if (isPlainObject(val1)) {
+    return deepMerge(val1)
+  }
+  return val1
 }
 
 // 策略映射Map
