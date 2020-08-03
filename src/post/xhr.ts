@@ -67,17 +67,6 @@ function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
         request: xhr
       }
 
-      if (cancelToken) {
-        cancelToken.promise
-          .then(reason => {
-            xhr.abort()
-            reject(reason)
-          })
-          .catch(() => {
-            console.log('cancelToken error')
-          })
-      }
-
       if (!validateStatus || validateStatus(xhr.status)) {
         resolve(response)
       } else {
@@ -113,6 +102,17 @@ function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
           request: xhr
         })
       )
+    }
+
+    if (cancelToken) {
+      cancelToken.promise
+        .then(reason => {
+          xhr.abort()
+          reject(reason)
+        })
+        .catch(() => {
+          console.log('cancelToken error')
+        })
     }
 
     if (onDownloadProgress) {
