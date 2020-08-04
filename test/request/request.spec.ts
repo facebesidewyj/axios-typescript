@@ -79,6 +79,42 @@ describe('request', () => {
       }, 100)
     })
   })
+  test('should reject when request error', done => {
+    let err: AxiosErrorConfig
+
+    axios('/test', {}).catch(error => {
+      err = error
+    })
+
+    getAjaxRequest().then(res => {
+      // @ts-ignore
+      res.eventBus.trigger('error')
+      setTimeout(() => {
+        expect(err instanceof Error).toBeTruthy()
+        expect(err.message).toBe('Network Error')
+        done()
+      }, 100)
+    })
+  })
+  test('should do nothing when status to be zero', done => {
+    let err: AxiosErrorConfig
+
+    axios('/test', {}).catch(error => {
+      err = error
+    })
+
+    getAjaxRequest().then(res => {
+      res.respondWith({
+        status: 0
+      })
+
+      setTimeout(() => {
+        expect(err instanceof Error).toBeTruthy()
+        expect(err.message).toBe('Network Error')
+        done()
+      }, 100)
+    })
+  })
 
   test('should reject when validateStatus returns false', done => {
     const resolveSpy = jest.fn((res: AxiosResponse) => {

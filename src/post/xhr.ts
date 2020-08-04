@@ -51,7 +51,14 @@ function xhr(requestConfig: AxiosRequestConfig): AxiosPromise {
 
       // 请求出错（网络错误或超时）status为0
       if (xhr.status === 0) {
-        return
+        reject(
+          createError({
+            message: 'Network Error',
+            requestConfig,
+            code: null,
+            request: xhr
+          })
+        )
       }
 
       const headers =
