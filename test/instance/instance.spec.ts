@@ -144,4 +144,11 @@ describe('instance', () => {
       }, 100)
     })
   })
+  test('config 中的 baseUrl 有值，并且 url 是相对地址时，会根据 baseUrl 进行拼接', () => {
+    const axiosInstance = axios.create({ baseURL: 'base' })
+    axiosInstance('/test')
+    return getAjaxRequest().then(req => {
+      expect(req.url).toBe('base/test')
+    })
+  })
 })
