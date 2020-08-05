@@ -2,8 +2,9 @@
 set -e
 echo "输入版本类型(patch/minor/major/preminor/prepatch/prerelease)："
 read VERSION
-read -p "确认 $VERSION ?(y/n)" -n 1 r
-echo
+read -p "Releasing $VERSION - are you sure? (y/n)" -n 1 -r
+echo # (optional) move to a new line
+echo "aaaa $REPLY"
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
   echo "构建 $VERSION 。。。"
