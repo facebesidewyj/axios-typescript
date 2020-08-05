@@ -8,4 +8,8 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
   echo "构建 $VERSION 。。。"
   git add -A
-  git commit -m 
+  git commit -m "[build] $VERSION"
+  npm version $VERSION --message "[release] $VERSION"
+  git push origin master
+  npm publish
+fi
