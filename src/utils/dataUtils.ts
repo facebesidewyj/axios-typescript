@@ -32,7 +32,9 @@ function parseResponseData(data: any): any {
   if (isString(data)) {
     try {
       data = JSON.parse(data)
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
   }
   return data
 }
