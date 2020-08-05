@@ -1,18 +1,18 @@
 {
-  "name": "axios-typescript",
+  "name": "@facebesidewyj/axios",
   "version": "0.0.0",
   "description": "",
   "keywords": [],
-  "main": "dist/axios-typescript.umd.js",
-  "module": "dist/axios-typescript.es5.js",
-  "typings": "dist/types/axios-typescript.d.ts",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.es5.js",
+  "typings": "dist/types/index.d.ts",
   "files": [
     "dist"
   ],
   "author": "facebesidewyj",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/facebesidewyj/axios-typescript"
   },
   "license": "MIT",
   "engines": {
@@ -22,6 +22,8 @@
     "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",
     "build": "npm run prebuild && tsc --module commonjs && rollup -c rollup.config.ts && typedoc --out docs --target es6 --theme minimal --mode file src",
+    "prepublish": "npm run test:prod && npm run build",
+    "publish": "sh tools/release.sh",
     "start": "rollup -c rollup.config.ts -w",
     "test": "jest --coverage -i --no-cache",
     "test:watch": "npm run test -- --watch",
