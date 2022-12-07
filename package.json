@@ -73,7 +73,7 @@
     "jasmine-core": "^3.5.0",
     "jest": "^24.8.0",
     "jest-config": "^24.8.0",
-    "lint-staged": "^8.0.0",
+    "lint-staged": "^13.1.0",
     "lodash.camelcase": "^4.3.0",
     "prettier": "^1.14.3",
     "prompt": "^1.0.0",
